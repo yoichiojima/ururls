@@ -10,14 +10,49 @@ import {
   Container,
   Tag,
   TagLabel,
+  Link,
 } from "@chakra-ui/react";
 
+const Content = ({ id, title, url, tags, category, rate }) => {
+  return (
+    <Container mb={20}>
+      <Link href={url} isExternal>
+        <Text as="h2" fontSize="2xl" my={3}>
+          {id}.{title}
+        </Text>
+      </Link>
+      <Text as="h3" fontSize="md" mb={2}>
+        {category}
+      </Text>
+      <Box my={3}>
+        {tags.map((tag, index) => (
+          <Tag
+            key={index}
+            size="md"
+            borderRadius="full"
+            variant="solid"
+            colorScheme="green"
+            mr={2}
+          >
+            <TagLabel>{tag}</TagLabel>
+          </Tag>
+        ))}
+      </Box>
+      <Text as="h3" fontSize="md">
+        {rate}
+      </Text>
+    </Container>
+  );
+};
+
 const App = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState([
+    { id: "", alias: "", url: "", tags: [], category: "", rate: "" },
+  ]);
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/v1/list/")
+      .get("http://localhost:8000/v1/summary_1")
       .then((res) => {
         setData(res.data);
       })
@@ -27,35 +62,9 @@ const App = () => {
     // eslint-disable-next-line
   }, []);
 
-  console.log(data);
-
-  const title = "titletitletitletitle";
-  const tags = ["tag", "tag", "tag"];
-
-  const Content = ({ title, tags }) => {
-    return (
-      <Container mb={20}>
-        <Text as="h2" fontSize="2xl" my={7}>
-          {title}
-        </Text>
-        {tags.map((tag) => (
-          <Tag
-            size="md"
-            borderRadius="full"
-            variant="solid"
-            colorScheme="green"
-            mr={1}
-          >
-            <TagLabel>{tag}</TagLabel>
-          </Tag>
-        ))}
-      </Container>
-    );
-  };
-
   return (
     <ChakraProvider>
-      <Box py={350}>
+      <Box py={400}>
         <Center>
           <Heading as="h1" size="2xl">
             ururls
@@ -63,9 +72,17 @@ const App = () => {
         </Center>
       </Box>
       <Box>
-        <Content title={title} tags={tags} />
-        <Content title={title} tags={tags} />
-        <Content title={title} tags={tags} />
+        {data.map((item) => (
+          <Content
+            key={item.id}
+            id={item.id}
+            title={item.alias}
+            url={item.url}
+            tags={item.tags}
+            category={item.category}
+            rate={item.rate}
+          />
+        ))}
       </Box>
     </ChakraProvider>
   );
