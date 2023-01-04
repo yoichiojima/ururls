@@ -29,29 +29,29 @@ const App = () => {
 
   console.log(data);
 
-  const title = 'titletitletitletitle'
-  const tags = ['tag', 'tag', 'tag'];
+  const title = "titletitletitletitle";
+  const tags = ["tag", "tag", "tag"];
 
   const Content = ({ title, tags }) => {
     return (
-    <Container mb={20}>
-      <Text as="h2" fontSize="2xl" my={7}>
-        {title}
-      </Text>
-      {tags.map((tag) => 
-        <Tag
-          size="md"
-          borderRadius="full"
-          variant="solid"
-          colorScheme="green"
-          mr={1}
-        >
-          <TagLabel>{tag}</TagLabel>
-        </Tag>
-      )}
-    </Container>
-    )
-  }
+      <Container mb={20}>
+        <Text as="h2" fontSize="2xl" my={7}>
+          {title}
+        </Text>
+        {tags.map((tag) => (
+          <Tag
+            size="md"
+            borderRadius="full"
+            variant="solid"
+            colorScheme="green"
+            mr={1}
+          >
+            <TagLabel>{tag}</TagLabel>
+          </Tag>
+        ))}
+      </Container>
+    );
+  };
 
   return (
     <ChakraProvider>
